@@ -71,9 +71,20 @@ const fs_1 = __importDefault(__webpack_require__(747));
 function read(key, file) {
     const file_text = fs_1.default.readFileSync(file, 'utf8');
     const json = JSON.parse(file_text);
-    return json[key];
+    return accessObject(json, accessKeys(key));
 }
 exports.read = read;
+function accessKeys(key) {
+    return key.split('.');
+}
+/* eslint-disable @typescript-eslint/no-explicit-any*/
+function accessObject(obj, keys) {
+    let next = obj;
+    for (const key of keys) {
+        next = next[key];
+    }
+    return next;
+}
 
 
 /***/ }),
