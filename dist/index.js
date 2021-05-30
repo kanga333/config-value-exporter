@@ -82,6 +82,9 @@ function accessObject(obj, keys) {
     let next = obj;
     for (const key of keys) {
         next = next[key];
+        if (next == null) {
+            throw Error(`No such key error ${key}`);
+        }
     }
     return next;
 }
