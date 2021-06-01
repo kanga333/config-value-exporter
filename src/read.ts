@@ -7,7 +7,29 @@ export function read(key: string, file: string): string {
 }
 
 function accessKeys(key: string): string[] {
-  return key.split('.')
+  const strings: string[] = []
+  let k = ''
+  for (let i = 0; i < key.length; i++) {
+    const char = key.charAt(i)
+    switch (char) {
+      case '.':
+        strings.push(k)
+        k = ''
+        break
+      case '[':
+        strings.push(k)
+        k = ''
+        break
+      case ']':
+        break
+      default:
+        k += char
+    }
+  }
+  if (k !== '') {
+    strings.push(k)
+  }
+  return strings
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/

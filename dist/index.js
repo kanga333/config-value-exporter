@@ -75,7 +75,29 @@ function read(key, file) {
 }
 exports.read = read;
 function accessKeys(key) {
-    return key.split('.');
+    const strings = [];
+    let k = '';
+    for (let i = 0; i < key.length; i++) {
+        const char = key.charAt(i);
+        switch (char) {
+            case '.':
+                strings.push(k);
+                k = '';
+                break;
+            case '[':
+                strings.push(k);
+                k = '';
+                break;
+            case ']':
+                break;
+            default:
+                k += char;
+        }
+    }
+    if (k !== '') {
+        strings.push(k);
+    }
+    return strings;
 }
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 function accessObject(obj, keys) {
