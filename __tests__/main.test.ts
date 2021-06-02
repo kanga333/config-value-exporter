@@ -5,4 +5,6 @@ test('read', async () => {
   expect(read('scripts.build', 'package.json')).toBe('tsc')
   expect(read('keywords[1]', 'package.json')).toBe('node')
   expect(() => read('scripts.xxx', 'package.json')).toThrow()
+  expect(read('a\\.b', '__tests__/test.json')).toBe('not_nest')
+  expect(read('a.b', '__tests__/test.json')).toBe('nest')
 })

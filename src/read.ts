@@ -1,5 +1,7 @@
 import fs from 'fs'
 
+const ESCAPE_CHAR = ['\\', '.', '[', ']']
+
 export function read(key: string, file: string): string {
   const file_text = fs.readFileSync(file, 'utf8')
   const json = JSON.parse(file_text)
@@ -12,18 +14,31 @@ function accessKeys(key: string): string[] {
   for (let i = 0; i < key.length; i++) {
     const char = key.charAt(i)
     switch (char) {
-      case '.':
+      case '\\': {
+        i++
+        const next = key.charAt(i)
+        if (!ESCAPE_CHAR.includes(next)) {
+          throw Error(`Illegal escape string ${char}${next}`)
+        }
+        k += next
+        break
+      }
+      case '.': {
         strings.push(k)
         k = ''
         break
-      case '[':
+      }
+      case '[': {
         strings.push(k)
         k = ''
         break
-      case ']':
+      }
+      case ']': {
         break
-      default:
+      }
+      default: {
         k += char
+      }
     }
   }
   if (k !== '') {

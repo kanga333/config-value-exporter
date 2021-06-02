@@ -68,6 +68,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.read = void 0;
 const fs_1 = __importDefault(__webpack_require__(747));
+const ESCAPE_CHAR = ['\\', '.', '[', ']'];
 function read(key, file) {
     const file_text = fs_1.default.readFileSync(file, 'utf8');
     const json = JSON.parse(file_text);
@@ -80,18 +81,31 @@ function accessKeys(key) {
     for (let i = 0; i < key.length; i++) {
         const char = key.charAt(i);
         switch (char) {
-            case '.':
+            case '\\': {
+                i++;
+                const next = key.charAt(i);
+                if (!ESCAPE_CHAR.includes(next)) {
+                    throw Error(`Illegal escape string ${char}${next}`);
+                }
+                k += next;
+                break;
+            }
+            case '.': {
                 strings.push(k);
                 k = '';
                 break;
-            case '[':
+            }
+            case '[': {
                 strings.push(k);
                 k = '';
                 break;
-            case ']':
+            }
+            case ']': {
                 break;
-            default:
+            }
+            default: {
                 k += char;
+            }
         }
     }
     if (k !== '') {
