@@ -3,6 +3,59 @@ require('./sourcemap-register.js');module.exports =
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 889:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseKey = void 0;
+const ESCAPE_CHAR = ['\\', '.', '[', ']'];
+function parseKey(key) {
+    const parsedKeys = [];
+    let token = '';
+    for (let i = 0; i < key.length; i++) {
+        const char = key.charAt(i);
+        switch (char) {
+            case '\\': {
+                i++;
+                const next = key.charAt(i);
+                if (!ESCAPE_CHAR.includes(next)) {
+                    throw Error(`Illegal escape string ${char}${next}`);
+                }
+                token += next;
+                break;
+            }
+            case '.': {
+                registerToken(token, parsedKeys);
+                token = '';
+                break;
+            }
+            case '[': {
+                registerToken(token, parsedKeys);
+                token = '';
+                break;
+            }
+            case ']': {
+                break;
+            }
+            default: {
+                token += char;
+            }
+        }
+    }
+    registerToken(token, parsedKeys);
+    return parsedKeys;
+}
+exports.parseKey = parseKey;
+function registerToken(token, keys) {
+    if (token !== '') {
+        keys.push(token);
+    }
+}
+
+
+/***/ }),
+
 /***/ 109:
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
@@ -68,51 +121,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.read = void 0;
 const fs_1 = __importDefault(__webpack_require__(747));
-const ESCAPE_CHAR = ['\\', '.', '[', ']'];
+const key_1 = __webpack_require__(889);
 function read(key, file) {
     const file_text = fs_1.default.readFileSync(file, 'utf8');
     const json = JSON.parse(file_text);
-    return accessObject(json, accessKeys(key));
+    return accessObject(json, key_1.parseKey(key));
 }
 exports.read = read;
-function accessKeys(key) {
-    const strings = [];
-    let k = '';
-    for (let i = 0; i < key.length; i++) {
-        const char = key.charAt(i);
-        switch (char) {
-            case '\\': {
-                i++;
-                const next = key.charAt(i);
-                if (!ESCAPE_CHAR.includes(next)) {
-                    throw Error(`Illegal escape string ${char}${next}`);
-                }
-                k += next;
-                break;
-            }
-            case '.': {
-                strings.push(k);
-                k = '';
-                break;
-            }
-            case '[': {
-                strings.push(k);
-                k = '';
-                break;
-            }
-            case ']': {
-                break;
-            }
-            default: {
-                k += char;
-            }
-        }
-    }
-    if (k !== '') {
-        strings.push(k);
-    }
-    return strings;
-}
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 function accessObject(obj, keys) {
     let next = obj;
