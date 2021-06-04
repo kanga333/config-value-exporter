@@ -9,12 +9,18 @@ export function read(key: string, file: string): string {
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 function accessObject(obj: any, keys: string[]): string {
-  let next = obj
+  let current = obj
+  const accessed: string[] = []
   for (const key of keys) {
-    next = next[key]
+    const next = current[key]
     if (next == null) {
-      throw Error(`No such key error ${key}`)
+      throw Error(`${accessed} ${key} is not exist`)
     }
+    current = next
+    accessed.push(key)
   }
-  return next
+  if (typeof current === 'object') {
+    throw Error(`${accessed} is object`)
+  }
+  return String(current)
 }

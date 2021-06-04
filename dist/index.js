@@ -130,14 +130,20 @@ function read(key, file) {
 exports.read = read;
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 function accessObject(obj, keys) {
-    let next = obj;
+    let current = obj;
+    const accessed = [];
     for (const key of keys) {
-        next = next[key];
+        const next = current[key];
         if (next == null) {
-            throw Error(`No such key error ${key}`);
+            throw Error(`${accessed} ${key} is not exist`);
         }
+        current = next;
+        accessed.push(key);
     }
-    return next;
+    if (typeof current === 'object') {
+        throw Error(`${accessed} is object`);
+    }
+    return String(current);
 }
 
 
