@@ -7,8 +7,20 @@ const table = [
   {name: 'escape', key: 'key\\.\\[\\]\\\\', expected: 'escape_value'}
 ]
 
-for (const {name, key, expected} of table) {
-  test(name, async () => {
-    expect(read(key, '__tests__/fixture/testdata.json')).toBe(expected)
+describe('read', () => {
+  describe('can read value form json file', () => {
+    for (const {name, key, expected} of table) {
+      test(name, async () => {
+        expect(read(key, '__tests__/fixture/testdata.json')).toBe(expected)
+      })
+    }
   })
-}
+
+  describe('can read value form yaml file', () => {
+    for (const {name, key, expected} of table) {
+      test(name, async () => {
+        expect(read(key, '__tests__/fixture/testdata.yaml')).toBe(expected)
+      })
+    }
+  })
+})
