@@ -27,7 +27,7 @@
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@types/js-yaml": "^4.0.1",
-    "js-yaml": "^3.14.1"
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.15",
