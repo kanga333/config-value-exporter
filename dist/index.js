@@ -95,8 +95,9 @@ function run() {
         try {
             const key = core.getInput('key');
             const file = core.getInput('file');
+            const format = core.getInput('format');
             core.debug(`Read ${key} from ${file}`);
-            const result = read_1.read(key, file);
+            const result = read_1.read(key, file, format);
             core.debug(`Result is ${result}`);
             core.setOutput('result', result);
         }
@@ -123,17 +124,17 @@ const fs_1 = __importDefault(__nccwpck_require__(747));
 const js_yaml_1 = __importDefault(__nccwpck_require__(917));
 const toml_1 = __importDefault(__nccwpck_require__(901));
 const key_1 = __nccwpck_require__(889);
-function read(key, file) {
-    const obj = readConfigFile(file);
+function read(key, file, format = '') {
+    const obj = readConfigFile(file, format);
     const keys = key_1.parseKey(key);
     return accessObject(obj, keys);
 }
 exports.read = read;
 /* eslint-disable @typescript-eslint/no-explicit-any*/
-function readConfigFile(file) {
+function readConfigFile(file, format) {
     const file_text = fs_1.default.readFileSync(file, 'utf8');
-    const ext = file.split('.').slice(-1)[0];
-    switch (ext.toLowerCase()) {
+    const ext = format === '' ? file.split('.').slice(-1)[0].toLowerCase() : format;
+    switch (ext) {
         case 'json':
             return JSON.parse(file_text);
         case 'yaml':

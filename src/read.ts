@@ -3,17 +3,18 @@ import yaml from 'js-yaml'
 import toml from '@iarna/toml'
 import {parseKey} from './key'
 
-export function read(key: string, file: string): string {
-  const obj = readConfigFile(file)
+export function read(key: string, file: string, format = ''): string {
+  const obj = readConfigFile(file, format)
   const keys = parseKey(key)
   return accessObject(obj, keys)
 }
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
-function readConfigFile(file: string): any {
+function readConfigFile(file: string, format: string): any {
   const file_text = fs.readFileSync(file, 'utf8')
-  const ext = file.split('.').slice(-1)[0]
-  switch (ext.toLowerCase()) {
+  const ext =
+    format === '' ? file.split('.').slice(-1)[0].toLowerCase() : format
+  switch (ext) {
     case 'json':
       return JSON.parse(file_text)
     case 'yaml':

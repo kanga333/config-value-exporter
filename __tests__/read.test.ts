@@ -31,4 +31,12 @@ describe('read', () => {
       })
     }
   })
+
+  describe('can read value form no ext file', () => {
+    for (const {name, key, expected} of table) {
+      test(name, async () => {
+        expect(read(key, '__tests__/fixture/testdata', 'json')).toBe(expected)
+      })
+    }
+  })
 })
