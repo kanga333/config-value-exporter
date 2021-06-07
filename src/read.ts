@@ -1,5 +1,6 @@
 import fs from 'fs'
 import yaml from 'js-yaml'
+import toml from '@iarna/toml'
 import {parseKey} from './key'
 
 export function read(key: string, file: string): string {
@@ -18,6 +19,8 @@ function readConfigFile(file: string): any {
     case 'yaml':
     case 'yml':
       return yaml.load(file_text, {json: true})
+    case 'toml':
+      return toml.parse(file_text)
   }
   throw Error(`Unexpected file type, valid format are json or yaml`)
 }

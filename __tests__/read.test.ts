@@ -23,4 +23,12 @@ describe('read', () => {
       })
     }
   })
+
+  describe('can read value form toml file', () => {
+    for (const {name, key, expected} of table) {
+      test(name, async () => {
+        expect(read(key, '__tests__/fixture/testdata.toml')).toBe(expected)
+      })
+    }
+  })
 })

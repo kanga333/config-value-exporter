@@ -1,0 +1,5 @@
+flat = "flat_value"
+array = [{ nest = "array_nest_value"}]
+"key.[]\\"  = "escape_value"
+[parent]
+child = "nest_value"
