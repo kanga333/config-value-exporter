@@ -20,9 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: ./
-        id: version
+        id: integration-test
         with:
-          key: version
-          file: package.json
+          key: jobs.test.steps[1].id
+          file: .github/workflows/test.yml
       - run: |
-          echo "${{steps.version.outputs.result}}"
+          test '${{steps.integration-test.outputs.result}}' == 'integration-test'
