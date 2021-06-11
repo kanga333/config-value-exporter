@@ -1,1 +1,1 @@
-# value-exporter
+# config-value-exporter
