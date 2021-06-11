@@ -2,14 +2,14 @@ name: 'config-value-exporter'
 description: ''
 author: 'kanga333'
 inputs:
-  key: # change this
+  key:
     required: true
-    description: ''
+    description: 'Key of the value to export from the configuration.'
   file:
     required: true
-    description: ''
+    description: 'Path of the configuration file.'
   format:
-    description: ''
+    description: 'Format of the configuration file. If this value is empty, it will be determined from the file extension.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
