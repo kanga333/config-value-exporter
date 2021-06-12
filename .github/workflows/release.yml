@@ -1,0 +1,34 @@
+on:
+  branches:
+    - main
+  paths:
+    - "package.json"
+
+name: Create Release if version is bumped
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - uses: ./
+        id: version
+        with:
+          key: version
+          file: package.json
+      - id: tag_check
+        run: |
+          git rev-parse ${{steps.version.outputs.result}} 2> /dev/null \
+            || echo '::set-output name=exist::false'
+      - name: Create Release
+        if: steps.tag_check.outputs.exist == 'false'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{steps.version.outputs.result}}
+          release_name: Release ${{steps.version.outputs.result}}
+          draft: false
+          prerelease: false
