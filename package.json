@@ -1,6 +1,6 @@
 {
   "name": "config-value-exporter",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "private": true,
   "description": "Export configuration file value to output.",
   "main": "lib/main.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kanga333/value-exporter.git"
+    "url": "git+https://github.com/kanga333/config-value-exporter.git"
   },
   "keywords": [
     "actions",
