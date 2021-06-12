@@ -1,5 +1,8 @@
 name: 'config-value-exporter'
-description: ''
+description: 'Export configuration file value to output'
+branding:
+  color: blue
+  icon: file-plus
 author: 'kanga333'
 inputs:
   key:
