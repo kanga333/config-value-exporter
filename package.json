@@ -2,7 +2,7 @@
   "name": "config-value-exporter",
   "version": "0.0.2",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Export configuration file value to output",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
