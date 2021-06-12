@@ -19,11 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: kanga333/config-value-exporter@main
-        id: version
+        id: name
         with:
-          key: version
+          key: name
           file: package.json
       - run: |
           # echo 'config-value-exporter'
-          echo '${{steps.version.outputs.result}}'
+          echo '${{steps.name.outputs.result}}'
 ```
