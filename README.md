@@ -1,5 +1,7 @@
 # config-value-exporter
 
+![test](https://github.com/kanga333/config-value-exporter/workflows/build-test/badge.svg)
+
 This is a Github Action to export configuration file value to output.
 
 ## Example
@@ -27,3 +29,13 @@ jobs:
           # echo 'config-value-exporter'
           echo '${{steps.name.outputs.result}}'
 ```
+
+## Inputs
+
+|  name  |  description  |
+| ---- | ---- |
+|  key  |  Key of the value to export from the configuration.  |
+|  file  |  Path of the configuration file. |
+|  format  |  Format of the configuration file. If this value is empty, it will be determined from the file extension. |
+
+This action supports `json`, `yaml`, and `toml` formats.
