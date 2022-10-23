@@ -14,5 +14,5 @@ inputs:
   format:
     description: 'Format of the configuration file. If this value is empty, it will be determined from the file extension.'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
