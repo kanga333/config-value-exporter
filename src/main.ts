@@ -11,7 +11,7 @@ async function run(): Promise<void> {
     core.debug(`Result is ${result}`)
     core.setOutput('result', result)
   } catch (error) {
-    core.setFailed(error.message)
+    if (error instanceof Error) core.setFailed(error.message)
   }
 }
 
